@@ -21,3 +21,33 @@ class Player(CircleShape):
     
     def draw(self, screen):
         pygame.draw.polygon(screen, "white", self.triangle(), 2)
+
+    def rotate(self, direction, dt):
+        if direction == "left":
+            self.rotation -= PLAYER_TURN_SPEED * dt
+        elif direction == "right":
+            self.rotation += PLAYER_TURN_SPEED * dt
+    
+    def update(self, dt):
+        keys = pygame.key.get_pressed()
+        self.dt = dt
+
+        if keys[pygame.K_a]:
+            Player.rotate(self, "left", dt)
+    
+        if keys[pygame.K_d]:
+            Player.rotate(self, "right", dt)
+
+        if keys[pygame.K_w]:
+            Player.move(self, "forward", dt)
+
+        if keys[pygame.K_s]:
+            Player.move(self, "backward", dt)
+
+    def move(self, direction, dt):
+        forward = pygame.Vector2(0, -1).rotate(self.rotation)
+
+        if direction == "forward":
+            self.position -= forward * PLAYER_SPEED * dt
+        elif direction == "backward":
+            self.position += forward * PLAYER_SPEED * dt
