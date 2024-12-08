@@ -27,3 +27,9 @@ class CircleShape(pygame.sprite.Sprite):
             return True
         else:
             return False
+        
+    def check_asteroid_destruction(self, other):
+        distance = self.position.distance_to(other.position)
+        if distance <= self.radius + other.radius:
+            self.kill()
+            other.kill()
