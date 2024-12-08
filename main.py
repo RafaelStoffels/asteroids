@@ -51,7 +51,9 @@ def main():
                 return
             
             for obj in shots:
-                obj.check_asteroid_destruction(asteroid)
+                if obj.check_asteroid_destruction(asteroid):
+                    obj.kill()
+                    asteroid.split()
 
         pygame.display.flip()
         
